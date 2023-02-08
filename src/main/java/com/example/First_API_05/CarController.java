@@ -3,26 +3,28 @@ package com.example.First_API_05;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/cars")
 public class CarController {
 
 
     private CarDTO cars;
 
-    @GetMapping(value = "/")
-    public String getCars(@RequestParam String carID, @RequestParam String model, @RequestParam (required = false) Double price){
+    @GetMapping(value = "/get")
+    public CarDTO getCars(){
         System.out.println("CarDTO has been called");
-        return "The id: " + carID + "| Model name: " + model + "| Price: " + price;
+        return new CarDTO("01", "Audi",25000);
     }
 
-    // GET  >>>> Su postman >>>>>       http://localhost:8080/?carID=005&model=Audi&price=25000.00
+    // GET  >>>> Su postman >>>>>       http://localhost:8080/
 
     @PostMapping(value = "/post")
-    public String postCars(@RequestBody CarDTO cars){
-        System.out.println("CarDTO post");
-        return cars.toString();
+    public String postCars(@RequestBody CarDTO car){
+        System.out.println(car);
+        return HttpStatus.CREATED.toString();
     }
 
     /*  POST >>>> su postman >>>>>
